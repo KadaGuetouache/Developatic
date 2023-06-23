@@ -22,7 +22,8 @@ export default function Register() {
     }, []);
 
     const onFinish = (e) => {
-        post(route("register"), e);
+        e.preventDefault();
+        post(route("register"));
     };
 
     return (

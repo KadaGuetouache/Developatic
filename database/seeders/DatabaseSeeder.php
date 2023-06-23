@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,18 +29,18 @@ class DatabaseSeeder extends Seeder
             $users[] = [
                 'name' => $faker->name(),
                 'email' => $faker->email(),
-                'password' => $faker->password(),
+                'password' => Hash::make($faker->password()),
                 'date_of_birth' => $faker->dateTimeBetween('-75 years', '-15 years')->format('Y-m-d'),
-                'user_type' => 'standard'
+                'is_admin' => false
             ];
         }
 
         $users[] = [
             'name' => 'Administrator',
             'email' => 'admin@something.com',
-            'password' => 'password',
+            'password' => Hash::make('something'),
             'date_of_birth' => $faker->dateTimeBetween('-75 years', '-15 years')->format('Y-m-d'),
-            'user_type' => 'admin'
+            'is_admin' => true
         ];
 
         DB::table('users')->insert($users);

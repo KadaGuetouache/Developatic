@@ -16,19 +16,6 @@ export default function Login({ status, canResetPassword }) {
         remember: false,
     });
 
-    // Fix for Input styles
-    const inputStyles = {
-        borderRadius: 5,
-        borderColor: "lightgray",
-        padding: 3,
-    };
-
-    const inputStylesError = {
-        borderRadius: 5,
-        borderColor: "red",
-        padding: 3,
-    };
-
     useEffect(() => {
         return () => {
             reset("password");
@@ -36,7 +23,8 @@ export default function Login({ status, canResetPassword }) {
     }, []);
 
     const submit = (e) => {
-        post(route("login"), e);
+        e.preventDefault();
+        post(route("login"));
     };
 
     return (

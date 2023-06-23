@@ -4,8 +4,8 @@ import {
     NotificationOutlined,
     UserOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, theme } from "antd";
-
+import { Layout, Menu, theme, Form, Button } from "antd";
+import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 const { Sider } = Layout;
 
 const items1 = ["1", "2", "3"].map((key) => ({
@@ -22,8 +22,27 @@ const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
     }
 );
 
-const AppLayout = ({ children }) => {
+const items = [
+    {
+        label: "Home",
+        key: "home",
+    },
+    {
+        label: "Register",
+        key: "register",
+    },
+];
+
+const AdminLayout = ({ children }) => {
     const { Header, Content, Footer } = Layout;
+
+    // const handleMenuClick = (e) => {
+    //     if (e.key === "home") {
+    //         route("admin.home");
+    //     } else if (e.key === "register") {
+    //         router.get("/register");
+    //     }
+    // };
 
     const {
         token: { colorBgContainer },
@@ -38,12 +57,27 @@ const AppLayout = ({ children }) => {
                 }}
             >
                 <div className="demo-logo" />
-                <Menu
+                {/* <Menu
                     theme="dark"
+                    onClick={handleMenuClick}
                     mode="horizontal"
                     defaultSelectedKeys={["2"]}
-                    items={items1}
-                />
+                    style={{ width: "170px" }}
+                    items={items}
+                /> */}
+
+                <ResponsiveNavLink
+                    method="post"
+                    href={route("logout")}
+                    as="button"
+                    style={{
+                        position: "relative",
+                        left: "94%",
+                        width: "80px",
+                    }}
+                >
+                    Logout
+                </ResponsiveNavLink>
             </Header>
             <Content
                 style={{
@@ -98,4 +132,4 @@ const AppLayout = ({ children }) => {
     );
 };
 
-export default AppLayout;
+export default AdminLayout;
