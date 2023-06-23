@@ -1,53 +1,25 @@
-import React from "react";
-import {
-    LaptopOutlined,
-    NotificationOutlined,
-    UserOutlined,
-} from "@ant-design/icons";
-import { Layout, Menu, theme, Form, Button } from "antd";
+import { Typography, Layout, Menu, theme } from "antd";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 const { Sider } = Layout;
 
-const items1 = ["1", "2", "3"].map((key) => ({
-    key,
-    label: `nav ${key}`,
-}));
-const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
-    (icon, index) => {
-        const key = String(index + 1);
-        return {
-            key: `sub${key}`,
-            label: `subnav ${key}`,
-        };
-    }
-);
-
-const items = [
+const sideNavItems = [
     {
-        label: "Home",
-        key: "home",
+        label: "Add New User",
+        key: "add",
     },
     {
-        label: "Register",
-        key: "register",
+        label: "Edit User",
+        key: "edit",
     },
 ];
 
-const AdminLayout = ({ children }) => {
+const AdminLayout = ({ children, user }) => {
     const { Header, Content, Footer } = Layout;
-
-    // const handleMenuClick = (e) => {
-    //     if (e.key === "home") {
-    //         route("admin.home");
-    //     } else if (e.key === "register") {
-    //         router.get("/register");
-    //     }
-    // };
+    const { Text } = Typography;
 
     const {
         token: { colorBgContainer },
     } = theme.useToken();
-
     return (
         <Layout>
             <Header
@@ -56,28 +28,34 @@ const AdminLayout = ({ children }) => {
                     alignItems: "center",
                 }}
             >
-                <div className="demo-logo" />
-                {/* <Menu
-                    theme="dark"
-                    onClick={handleMenuClick}
-                    mode="horizontal"
-                    defaultSelectedKeys={["2"]}
-                    style={{ width: "170px" }}
-                    items={items}
-                /> */}
-
-                <ResponsiveNavLink
-                    method="post"
-                    href={route("logout")}
-                    as="button"
+                <div className="demo-logo text-gray-300 text-lg font-bold uppercase">
+                    logo
+                </div>
+                <div
+                    className="relative left-[84%] flex w-[800px] navItems-center"
                     style={{
                         position: "relative",
-                        left: "94%",
-                        width: "80px",
+                        left: "84%",
                     }}
                 >
-                    Logout
-                </ResponsiveNavLink>
+                    <Text className="text-gray-400 text-md mr-5">
+                        {user.name}
+                    </Text>
+                    <ResponsiveNavLink
+                        method="post"
+                        href={route("logout")}
+                        style={{
+                            width: "80px",
+                            fontSize: "15px",
+                            borderRadius: 10,
+                            background: "#C00000",
+                            color: "white",
+                        }}
+                        as="button"
+                    >
+                        Logout
+                    </ResponsiveNavLink>
+                </div>
             </Header>
             <Content
                 style={{
@@ -103,7 +81,7 @@ const AdminLayout = ({ children }) => {
                             style={{
                                 height: "100%",
                             }}
-                            items={items2}
+                            items={sideNavItems}
                         />
                     </Sider>
                     <Content
@@ -119,11 +97,11 @@ const AdminLayout = ({ children }) => {
             <Footer
                 style={{
                     background: "#001529",
-                    width: "100%",
+                    // width: "100%",
                     color: "white",
                     textAlign: "center",
-                    position: "absolute",
-                    bottom: 0,
+                    // position: "absolute",
+                    // bottom: 0,
                 }}
             >
                 Ant Design ©2023 Created by Ant UED
