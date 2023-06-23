@@ -12,6 +12,21 @@ class UsersController extends Controller
     public function index(Request $request){
         $users = User::all();
 
+        function get_age_distribution($ageRange) {
+            // Extract the minimum and maximum ages from the range
+            list($minAge, $maxAge) = explode('-', $ageRange);
+            
+            // Retrieve the users grouped by age ranges
+            $ageDistribution = User::whereBetween('age', [$minAge, $maxAge])
+                ->selectRaw('FLOOR(age / 10) * 10 as ageRange, COUNT(*) as userCount')
+                ->groupBy('ageRange')
+                ->orderBy('ageRange')
+                ->pluck('userCount', 'ageRange')
+                ->toArray();
+            
+            return $ageDistribution;
+        }
+
         function find_user_pairs(int $number, object $users): array{
             $pairs = [];
             foreach ($users as $user1) {
@@ -22,6 +37,10 @@ class UsersController extends Controller
                 }
             }
             return $pairs;
+        }
+
+        if($request->age_range){
+            return get_age_distribution($request->age_range);
         }
 
         if($request->pair){
