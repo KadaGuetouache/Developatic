@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,25 +22,37 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-         $faker = Faker::create();
+        function calculate_age(string $date_of_birth):int{
+            $today = Carbon::today();
+            $date_of_birth = Carbon::parse($date_of_birth);
+            $age = $today->diffInYears($date_of_birth);
+            return $age;
+        }
+
+        $faker = Faker::create();
 
         $users = [];
 
         for ($i = 0; $i < 1000; $i++) {
+            $date = $faker->dateTimeBetween('-75 years', '-15 years')->format('Y-m-d');
             $users[] = [
                 'name' => $faker->name(),
                 'email' => $faker->email(),
                 'password' => Hash::make($faker->password()),
-                'date_of_birth' => $faker->dateTimeBetween('-75 years', '-15 years')->format('Y-m-d'),
+                'date_of_birth' => $date,
+                'age' => calculate_age($date),
                 'is_admin' => false
             ];
         }
+
+        $date = $faker->dateTimeBetween('-75 years', '-15 years')->format('Y-m-d');
 
         $users[] = [
             'name' => 'Administrator',
             'email' => 'admin@something.com',
             'password' => Hash::make('password'),
-            'date_of_birth' => $faker->dateTimeBetween('-75 years', '-15 years')->format('Y-m-d'),
+            'date_of_birth' => $date,
+            'age' => calculate_age($date),
             'is_admin' => true
         ];
 
