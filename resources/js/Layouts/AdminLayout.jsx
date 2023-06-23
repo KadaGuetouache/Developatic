@@ -1,21 +1,30 @@
 import { Typography, Layout, Menu, theme } from "antd";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 const { Sider } = Layout;
+import { router } from "@inertiajs/react";
 
 const sideNavItems = [
     {
-        label: "Add New User",
-        key: "add",
+        label: "Users List",
+        key: "show",
     },
     {
-        label: "Edit User",
-        key: "edit",
+        label: "Add New User",
+        key: "add",
     },
 ];
 
 const AdminLayout = ({ children, user }) => {
     const { Header, Content, Footer } = Layout;
     const { Text } = Typography;
+
+    const handleSideMenu = (e) => {
+        if (e.key === "add") {
+            router.get("/admin/show");
+        } else if (e.key === "show") {
+            router.get("/admin");
+        }
+    };
 
     const {
         token: { colorBgContainer },
@@ -32,7 +41,7 @@ const AdminLayout = ({ children, user }) => {
                     logo
                 </div>
                 <div
-                    className="relative left-[84%] flex w-[800px] navItems-center"
+                    className="relative left-[84%] flex w-[200px] nav items-center"
                     style={{
                         position: "relative",
                         left: "84%",
@@ -78,6 +87,7 @@ const AdminLayout = ({ children, user }) => {
                             mode="inline"
                             defaultSelectedKeys={["1"]}
                             defaultOpenKeys={["sub1"]}
+                            onClick={handleSideMenu}
                             style={{
                                 height: "100%",
                             }}

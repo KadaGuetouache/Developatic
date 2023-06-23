@@ -19,7 +19,7 @@ const Dashboard = ({ auth, users }) => {
                 />
                 <Column
                     title="Action"
-                    key="action"
+                    key="id"
                     render={(_, record) => (
                         <Space size="middle">
                             <ResponsiveNavLink

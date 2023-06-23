@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         $users[] = [
             'name' => 'Administrator',
             'email' => 'admin@something.com',
-            'password' => Hash::make('something'),
+            'password' => Hash::make('password'),
             'date_of_birth' => $faker->dateTimeBetween('-75 years', '-15 years')->format('Y-m-d'),
             'is_admin' => true
         ];

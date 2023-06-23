@@ -33,6 +33,9 @@ Route::get('/dashboard', function () {
 Route::get('/admin', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/admin/add', [AdminController::class, 'show'])->name('admin.add');
+    Route::get('/admin', [AdminController::class, 'Index'])->name('admin');
+    Route::post('/admin/{data}', [AdminController::class, 'create'])->name('admin.create');
     // Route::get('/admin', [AdminController::class, 'edit'])->name('admin.edit');
     // Route::patch('/admin', [AdminController::class, 'update'])->name('admin.update');
     Route::delete('admin/{id}', [AdminController::class, 'destroy'])->name('admin.delete');
